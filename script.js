@@ -1,15 +1,16 @@
 let narutoImages = [];
 
 function loadImages() {
-    const imagesFolder = 'images/';
-    fetch(imagesFolder)
+    fetch('images/')
         .then(response => response.json())
         .then(data => {
-            narutoImages = data.map(image => `${imagesFolder}${image}`);
+            narutoImages = data.map(image => `images/${image}`);
+            console.log('Generated Image URLs:', narutoImages);
             startGame();
         })
         .catch(error => console.error('Error loading images:', error));
 }
+
 
 function startGame() {
     displayNarutoImages();
