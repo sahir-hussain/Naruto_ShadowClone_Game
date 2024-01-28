@@ -1,16 +1,16 @@
 let narutoImages = [];
 
 function loadImages() {
-    // Fetch all images from the "images" folder
-    const imagesFolder = 'images/';
-    fetch(imagesFolder)
-        .then(response => response.json())
-        .then(data => {
-            narutoImages = data.map(image => `${imagesFolder}${image}`);
-            startGame();
-        })
-        .catch(error => console.error('Error loading images:', error));
+    // Provide the array of image names directly
+    const imageNames = ['naruto-scared.gif','naruto-shippuden-anime.gif','naruto-shippuden-naruto-run.gif','naruto-uzumaki.gif','naruto-uzumaki-naruto.gif','Trap.gif','trapGif.gif','trapItachi.gif','trapKakashi.gif','twtjjk.gif','uzumaki-naruto-crying.gif','waking-up.gif'];
+
+    // Construct the image URLs based on the provided names
+    narutoImages = imageNames.map(imageName => `images/${imageName}`);
+
+    // Start the game after loading images
+    startGame();
 }
+
 
 function startGame() {
     displayNarutoImages();
