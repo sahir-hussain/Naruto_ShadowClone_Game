@@ -7,6 +7,8 @@ function loadImages() {
     // Construct the image URLs based on the provided names
     narutoImages = imageNames.map(imageName => `images/${imageName}`);
 
+    console.log('Generated Image URLs:', narutoImages);
+
     // Start the game after loading images
     startGame();
 }
@@ -25,6 +27,7 @@ function startGame() {
 }
 
 function displayNarutoImages() {
+    console.log('narutoImages array:', narutoImages);
     const narutoContainer = document.getElementById('naruto-images');
     narutoContainer.innerHTML = '';
 
