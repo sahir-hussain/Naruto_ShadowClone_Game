@@ -29,8 +29,9 @@
 
         .images-container {
             display: flex;
-            justify-content: space-around;
             flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
             margin-top: 20px;
         }
 
@@ -96,7 +97,6 @@
             const images = ['naruto-scared.gif', 'naruto-shippuden-anime.gif', 'naruto-shippuden-naruto-run.gif', 'naruto-uzumaki.gif', 'naruto-uzumaki-naruto.gif', 'Trap.gif', 'trapGif.gif', 'trapItachi.gif', 'trapKakashi.gif', 'twtjjk.gif', 'uzumaki-naruto-crying.gif', 'waking-up.gif'];
             const correctAnswer = 'uzumaki-naruto.gif';
             let attempts = 5;
-            let selectedImage = null;
 
             function showImages() {
                 const imagesContainer = document.getElementById('images-container');
@@ -112,37 +112,26 @@
             }
 
             function selectImage(image) {
-                selectedImage = image;
-                checkAnswer();
-            }
-
-            function checkAnswer() {
-                if (attempts <= 0) {
-                    displayPopup('Game Over', false);
-                    return;
-                }
-
-                if (selectedImage === correctAnswer) {
-                    displayPopup('Congratulations! You found the real Naruto.', true);
+                attempts--;
+                if (attempts >= 0) {
+                    const isCorrect = image === correctAnswer;
+                    displayPopup(isCorrect);
                 } else {
-                    attempts--;
-                    if (attempts > 0) {
-                        showImages(); // Show the images again for the next attempt
-                    } else {
-                        displayPopup('Game Over', false);
-                    }
+                    displayPopup(false, true);
                 }
             }
 
-            function displayPopup(message, isCorrect) {
+            function displayPopup(isCorrect, isGameOver = false) {
                 const popup = document.getElementById('popup');
                 const popupMessage = popup.querySelector('.popup-message');
-                popupMessage.textContent = message;
+                const restartButton = document.getElementById('restart-button');
 
-                if (isCorrect) {
-                    popup.classList.add('correct');
+                if (isGameOver) {
+                    popupMessage.textContent = 'Game Over';
+                    restartButton.style.display = 'block';
                 } else {
-                    popup.classList.add('incorrect');
+                    popupMessage.textContent = isCorrect ? 'Congratulations! You found the real Naruto.' : `Wrong guess! ${attempts} attempts left.`;
+                    restartButton.style.display = 'none';
                 }
 
                 popup.style.display = 'block';
@@ -150,7 +139,6 @@
 
             function resetGame() {
                 attempts = 5;
-                selectedImage = null;
                 closePopup();
                 showImages();
             }
