@@ -1,4 +1,15 @@
-let narutoImages = ['images/naruto-scared.gif'];
+let narutoImages = [];
+
+function loadImages() {
+    const imagesFolder = 'images/';
+    fetch(imagesFolder)
+        .then(response => response.json())
+        .then(data => {
+            narutoImages = data.map(image => `${imagesFolder}${image}`);
+            startGame();
+        })
+        .catch(error => console.error('Error loading images:', error));
+}
 
 function startGame() {
     displayNarutoImages();
@@ -8,12 +19,13 @@ function displayNarutoImages() {
     const narutoContainer = document.getElementById('naruto-images');
     narutoContainer.innerHTML = '';
 
-    const imgElement = document.createElement('img');
-    imgElement.src = 'images/naruto-scared.gif';
-    imgElement.addEventListener('click', () => checkGuess(0));
-    narutoContainer.appendChild(imgElement);
+    for (let i = 0; i < narutoImages.length; i++) {
+        const imgElement = document.createElement('img');
+        imgElement.src = narutoImages[i];
+        imgElement.addEventListener('click', () => checkGuess(i));
+        narutoContainer.appendChild(imgElement);
+    }
 }
-
 
 function checkGuess(selectedIndex) {
     const popup = document.getElementById('popup');
@@ -45,3 +57,5 @@ function resetGame() {
     continueBtn.onclick = nextRound;
     displayNarutoImages();
 }
+
+document.addEventListener('DOMContentLoaded', loadImages);
