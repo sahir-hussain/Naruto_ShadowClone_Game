@@ -1,39 +1,73 @@
 body {
-    font-family: 'Arial', sans-serif;
     margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-image: url('https://www.chromethemer.com/backgrounds/naruto-concept-art-background.html');
+    background-size: cover;
+    background-position: center;
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+    color: white;
+}
+
+h1 {
+    font-size: 2em;
 }
 
 #game-container {
-    text-align: center;
+    margin-top: 20px;
 }
 
-#naruto-images img {
-    width: 150px;
-    margin: 10px;
+#naruto-image {
+    width: 300px;
+    height: auto;
+}
+
+#check-button {
+    padding: 10px;
+    font-size: 1em;
+    margin-top: 10px;
     cursor: pointer;
 }
 
-#popup {
+#attempts-container {
+    margin-top: 20px;
+}
+
+.popup {
     display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: white;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-#chances {
-    margin-top: 20px;
-    font-weight: bold;
+.popup-content {
+    text-align: center;
 }
 
-#continue-btn {
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #333;
+}
+
+.popup-message {
+    font-size: 1.2em;
+}
+
+#restart-button {
     padding: 10px;
+    font-size: 1em;
+    margin-top: 10px;
     cursor: pointer;
 }

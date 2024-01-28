@@ -1,68 +1,69 @@
-let narutoImages = [
-    'naruto-scared.gif',
-    'naruto-shippuden-anime.gif',
-    'naruto-shippuden-naruto-run.gif',
-    'naruto-uzumaki.gif',
-    'naruto-uzumaki-naruto.gif',
-    'Trap.gif',
-    'trapGif.gif',
-    'trapItachi.gif',
-    'trapKakashi.gif',
-    'twtjjk.gif',
-    'uzumaki-naruto-crying.gif',
-    'waking-up.gif'
-  ];
+document.addEventListener('DOMContentLoaded', function () {
+    const images = ['naruto-scared.gif', 'naruto-shippuden-anime.gif', 'naruto-shippuden-naruto-run.gif', 'naruto-uzumaki.gif', 'naruto-uzumaki-naruto.gif', 'Trap.gif', 'trapGif.gif', 'trapItachi.gif', 'trapKakashi.gif', 'twtjjk.gif', 'uzumaki-naruto-crying.gif', 'waking-up.gif'];
   
-  function loadImages() {
-    startGame();
-  }
+    const correctAnswer = 'uzumaki-naruto.gif';
+    let attempts = 5;
   
-  function startGame() {
-    displayNarutoImages();
-  }
+    function displayPopup(message, isCorrect) {
+      const popup = document.createElement('div');
+      popup.classList.add('popup');
+      popup.innerHTML = `<p>${message}</p>`;
+      
+      if (isCorrect) {
+        popup.classList.add('correct');
+      } else {
+        popup.classList.add('incorrect');
+      }
   
-  function displayNarutoImages() {
-    const narutoContainer = document.getElementById('naruto-images');
-    narutoContainer.innerHTML = '';
+      document.body.appendChild(popup);
   
-    narutoImages.forEach((imageName, index) => {
-      const imgElement = document.createElement('img');
-      imgElement.src = 'images/' + imageName; // Assuming the images are in the 'images' folder
-      imgElement.addEventListener('click', () => checkGuess(index));
-      narutoContainer.appendChild(imgElement);
-    });
-  }
-  
-  function checkGuess(selectedIndex) {
-    const popup = document.getElementById('popup');
-    const popupText = document.getElementById('popup-text');
-    const continueBtn = document.getElementById('continue-btn');
-    const chanceCount = document.getElementById('chance-count');
-  
-    if (selectedIndex === 0) {
-      popupText.textContent = 'You found the real Naruto! Well done!';
-    } else {
-      popupText.textContent = 'Oops! That was a Shadow Clone. Try again!';
+      setTimeout(() => {
+        popup.remove();
+        if (attempts === 0) {
+          displayGameOverPopup();
+        }
+      }, 2000);
     }
   
-    continueBtn.textContent = 'Play Again';
-    continueBtn.onclick = resetGame;
+    function displayGameOverPopup() {
+      const gameOverPopup = document.createElement('div');
+      gameOverPopup.classList.add('game-over-popup');
+      gameOverPopup.innerHTML = '<p>Game Over</p><button onclick="resetGame()">Play Again</button>';
+      document.body.appendChild(gameOverPopup);
+    }
   
-    popup.style.display = 'block';
-  }
+    function resetGame() {
+      attempts = 5;
+      document.querySelector('.game-over-popup').remove();
+      showRandomImage();
+    }
   
-  function nextRound() {
-    const popup = document.getElementById('popup');
-    popup.style.display = 'none';
-    displayNarutoImages();
-  }
+    function showRandomImage() {
+      const randomIndex = Math.floor(Math.random() * images.length);
+      const imageUrl = `images/${images[randomIndex]}`;
+      const imageElement = document.getElementById('image');
+      imageElement.src = imageUrl;
   
-  function resetGame() {
-    const continueBtn = document.getElementById('continue-btn');
-    continueBtn.textContent = 'Continue';
-    continueBtn.onclick = nextRound;
-    displayNarutoImages();
-  }
+      if (imageUrl === `images/${correctAnswer}`) {
+        imageElement.dataset.isCorrect = 'true';
+      } else {
+        imageElement.dataset.isCorrect = 'false';
+      }
+    }
   
-  document.addEventListener('DOMContentLoaded', loadImages);
+    document.getElementById('checkButton').addEventListener('click', function () {
+      const selectedImage = document.getElementById('image');
+      const isCorrect = selectedImage.dataset.isCorrect === 'true';
+  
+      if (isCorrect) {
+        displayPopup('Congratulations! You found the real Naruto.', true);
+      } else {
+        attempts--;
+        displayPopup(`Wrong guess! ${attempts} attempts left.`, false);
+        showRandomImage();
+      }
+    });
+  
+    showRandomImage();
+  });
   
