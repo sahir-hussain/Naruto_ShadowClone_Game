@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Naruto Shadow Clone Game</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Find the Real Naruto</title>
 </head>
-<body>
 
-    <div id="game-container">
-        <div id="naruto-images" class="image-container"></div>
-        <div id="popup">
-            <p id="popup-text"></p>
-            <button id="continue-btn" onclick="nextRound()">Continue</button>
+<body>
+    <div class="container">
+        <h1>Find the Real Naruto</h1>
+        <div id="game-container">
+            <img id="image" src="" alt="Naruto Image">
+            <button id="check-button">Check Answer</button>
         </div>
-        <div id="chances">Chances: <span id="chance-count">5</span></div>
+        <div id="attempts-container">Attempts left: <span id="attempts">5</span></div>
     </div>
 
     <script src="script.js"></script>
 </body>
+
 </html>
