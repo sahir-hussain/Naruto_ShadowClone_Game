@@ -8,13 +8,12 @@ function displayNarutoImages() {
     const narutoContainer = document.getElementById('naruto-images');
     narutoContainer.innerHTML = '';
 
-    for (let i = 0; i < narutoImages.length; i++) {
-        const imgElement = document.createElement('img');
-        imgElement.src = narutoImages[i];
-        imgElement.addEventListener('click', () => checkGuess(i));
-        narutoContainer.appendChild(imgElement);
-    }
+    const imgElement = document.createElement('img');
+    imgElement.src = 'images/naruto-scared.gif';
+    imgElement.addEventListener('click', () => checkGuess(0));
+    narutoContainer.appendChild(imgElement);
 }
+
 
 function checkGuess(selectedIndex) {
     const popup = document.getElementById('popup');
