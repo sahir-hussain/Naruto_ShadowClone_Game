@@ -1,24 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <title>Find the Real Naruto</title>
-</head>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-image: url('https://wallpapercrafter.com/th8007/1725095-Naruto-Eight-Trigrams-Sealing-Style-Naruto-Uzumaki.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
 
+        .container {
+            text-align: center;
+            padding: 20px;
+            color: white;
+        }
+
+        h1 {
+            font-size: 2em;
+        }
+
+        .images-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .image {
+            width: 100px;
+            height: auto;
+            cursor: pointer;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .popup-content {
+            text-align: center;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .popup-message {
+            font-size: 1.2em;
+        }
+
+        #restart-button {
+            padding: 10px;
+            font-size: 1em;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
 <body>
     <div class="container">
         <h1>Find the Real Naruto</h1>
-        <div id="game-container">
-            <img id="image" src="" alt="Naruto Image">
-            <button id="check-button">Check Answer</button>
+        <div class="images-container" id="images-container"></div>
+        <div class="popup" id="popup">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <div class="popup-content">
+                <p class="popup-message"></p>
+                <button id="restart-button" onclick="resetGame()">Play Again</button>
+            </div>
         </div>
-        <div id="attempts-container">Attempts left: <span id="attempts">5</span></div>
     </div>
 
-    <script src="script.js"></script>
-</body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const images = ['naruto-scared.gif', 'naruto-shippuden-anime.gif', 'naruto-shippuden-naruto-run.gif', 'naruto-uzumaki.gif', 'naruto-uzumaki-naruto.gif', 'Trap.gif', 'trapGif.gif', 'trapItachi.gif', 'trapKakashi.gif', 'twtjjk.gif', 'uzumaki-naruto-crying.gif', 'waking-up.gif'];
+            const correctAnswer = 'uzumaki-naruto.gif';
+            let attempts = 5;
+            let selectedImage = null;
 
+            function showImages() {
+                const imagesContainer = document.getElementById('images-container');
+                imagesContainer.innerHTML = '';
+                images.forEach(image => {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = `images/${image}`;
+                    imgElement.alt = 'naruto-image';
+                    imgElement.classList.add('image');
+                    imgElement.addEventListener('click', () => selectImage(image));
+                    imagesContainer.appendChild(imgElement);
+                });
+            }
+
+            function selectImage(image) {
+                selectedImage = image;
+                checkAnswer();
+            }
+
+            function checkAnswer() {
+                if (attempts <= 0) {
+                    displayPopup('Game Over', false);
+                    return;
+                }
+
+                if (selectedImage === correctAnswer) {
+                    displayPopup('Congratulations! You found the real Naruto.', true);
+                } else {
+                    attempts--;
+                    if (attempts > 0) {
+                        displayPopup(`Wrong guess! ${attempts} attempts left.`, false);
+                    } else {
+                        displayPopup('Game Over', false);
+                    }
+                }
+            }
+
+            function displayPopup(message, isCorrect) {
+                const popup = document.getElementById('popup');
+                const popupMessage = popup.querySelector('.popup-message');
+                popupMessage.textContent = message;
+
+                if (isCorrect) {
+                    popup.classList.add('correct');
+                } else {
+                    popup.classList.add('incorrect');
+                }
+
+                popup.style.display = 'block';
+
+                setTimeout(() => {
+                    popup.style.display = 'none';
+                    if (attempts === 0) {
+                        resetGame();
+                    }
+                }, 2000);
+            }
+
+            function resetGame() {
+                attempts = 5;
+                selectedImage = null;
+                showImages();
+            }
+
+            function closePopup() {
+                const popup = document.getElementById('popup');
+                popup.style.display = 'none';
+            }
+
+            showImages();
+        });
+    </script>
+</body>
 </html>
