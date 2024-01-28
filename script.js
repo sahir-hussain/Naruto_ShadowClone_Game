@@ -20,13 +20,18 @@ function displayNarutoImages() {
     const narutoContainer = document.getElementById('naruto-images');
     narutoContainer.innerHTML = '';
 
-    for (let i = 0; i < narutoImages.length; i++) {
+    // List the image names directly
+    const imageNames = ['naruto-scared.gif','naruto-shippuden-anime.gif','naruto-shippuden-naruto-run.gif','naruto-uzumaki.gif','naruto-uzumaki-naruto.gif','Trap.gif','trapGif.gif','trapItachi.gif','trapKakashi.gif','twtjjk.gif','uzumaki-naruto-crying.gif','waking-up.gif'];
+
+    for (let i = 0; i < imageNames.length; i++) {
         const imgElement = document.createElement('img');
-        imgElement.src = narutoImages[i];
+        // Use direct paths to the images in your project
+        imgElement.src = `images/${imageNames[i]}`;
         imgElement.addEventListener('click', () => checkGuess(i));
         narutoContainer.appendChild(imgElement);
     }
 }
+
 
 function checkGuess(selectedIndex) {
     const popup = document.getElementById('popup');
