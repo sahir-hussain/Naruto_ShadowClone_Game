@@ -127,7 +127,7 @@
                 } else {
                     attempts--;
                     if (attempts > 0) {
-                        displayPopup(`Wrong guess! ${attempts} attempts left.`, false);
+                        showImages(); // Show the images again for the next attempt
                     } else {
                         displayPopup('Game Over', false);
                     }
@@ -146,18 +146,12 @@
                 }
 
                 popup.style.display = 'block';
-
-                setTimeout(() => {
-                    popup.style.display = 'none';
-                    if (attempts === 0) {
-                        resetGame();
-                    }
-                }, 2000);
             }
 
             function resetGame() {
                 attempts = 5;
                 selectedImage = null;
+                closePopup();
                 showImages();
             }
 
